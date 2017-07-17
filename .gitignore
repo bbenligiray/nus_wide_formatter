@@ -1,0 +1,8 @@
+org_images/
+ImageList/
+NUS_WID_Tags/
+
+*.pyc
+*.h5
+*.zip
+*.rar
