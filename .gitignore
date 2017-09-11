@@ -1,4 +1,4 @@
-org_images/
+Flickr/
 ImageList/
 NUS_WID_Tags/
 
@@ -6,3 +6,4 @@ NUS_WID_Tags/
 *.h5
 *.zip
 *.rar
+*.tar.gz

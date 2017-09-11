@@ -1,8 +1,6 @@
 # NUS-WIDE Formatter
 
-A tool to download (to be implemented, right now it uses offline data) and format NUS-WIDE dataset
-
-It outputs a .h5 file that contains the following:
+A tool to format NUS-WIDE dataset. It outputs a .h5 file that contains the following:
 
 * data_types: 'train' and 'val'
 * cats: names of the 81 categories
@@ -14,16 +12,5 @@ It outputs a .h5 file that contains the following:
 * x_names: file names of the images
 * x_label: a one-hot integer vector of labels
 
-### My NUS WIDE stats:
-
-Train
-Total: 161789
-Missing: 28638
-Unlabeled: 66916
-Remaining: 66235
-
-Test
-Total: 107859
-Missing: 18924
-Unlabeled: 44305
-Remaining: 44630
+Follow the instructions here to get a download link of the raw dataset:
+http://lms.comp.nus.edu.sg/research/NUS-WIDE.htm

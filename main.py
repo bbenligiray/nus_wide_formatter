@@ -1,5 +1,6 @@
 import os
 import h5py
+import zipfile
 
 import numpy as np
 from PIL import Image
@@ -8,6 +9,25 @@ from calculate_mean import calculate_mean
 
 
 def main():
+
+	metadata_links = ['http://dl.nextcenter.org/public/nuswide/ImageList.zip',
+				'http://dl.nextcenter.org/public/nuswide/NUS_WID_Tags.zip']
+
+	for metadata_link in metadata_links:
+		zipfile_name = metadata_link.split('/')[-1]
+		dir_name = zipfile_name.split('.')[0]
+		if not os.path.isdir(dir_name):
+			os.system("wget -t0 -c '" + metadata_link + "'")
+			with zipfile.ZipFile(zipfile_name, 'r') as z:
+ 				z.extractall(dir_name)
+	
+	if not os.path.isdir('Flickr'):
+		if not os.path.isfile('Flickr.tar.gz'):
+			raise IOError('Flickr.tar.gz not found.')
+		os.system('tar -xf Flickr.tar.gz')
+
+	import pdb; pdb.set_trace()
+
 
 	with open('cats') as f:
 		cats = f.read().split('\n')
