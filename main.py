@@ -96,6 +96,8 @@ def main():
 			# if the image is grayscale, repeat its channels to make it RGB
 			if len(np_image.shape) == 2:
 				np_image = np.repeat(np_image[:, :, np.newaxis], 3, axis=2)
+			elif np_image.shape[2] == 4:
+				np_image = np_image[:, :, 0:3]
 
 			image_h[ind] = np_image.flatten()
 			name_h[ind] = image_name
