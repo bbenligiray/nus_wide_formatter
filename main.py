@@ -9,7 +9,6 @@ from calculate_mean import calculate_mean
 
 
 def main():
-
 	metadata_links = ['http://dl.nextcenter.org/public/nuswide/ImageList.zip',
 				'http://dl.nextcenter.org/public/nuswide/NUS_WID_Tags.zip']
 
@@ -25,9 +24,6 @@ def main():
 		if not os.path.isfile('Flickr.tar.gz'):
 			raise IOError('Flickr.tar.gz not found.')
 		os.system('tar -xf Flickr.tar.gz')
-
-	import pdb; pdb.set_trace()
-
 
 	with open('cats') as f:
 		cats = f.read().split('\n')
@@ -48,12 +44,12 @@ def main():
 	for data_type in data_types:
 		# read image names
 		if data_type == 'train':
-			with open(os.path.join('ImageList', 'TrainImagelist.txt')) as f:
+			with open(os.path.join('ImageList', 'ImageList', 'TrainImagelist.txt')) as f:
 				image_names_raw = f.read().splitlines()
 			with open(os.path.join('NUS_WID_Tags', 'Train_Tags81.txt')) as f:
 				labels_raw = f.read().splitlines()
 		elif data_type == 'test':
-			with open(os.path.join('ImageList', 'TestImagelist.txt')) as f:
+			with open(os.path.join('ImageList', 'ImageList', 'TestImagelist.txt')) as f:
 				image_names_raw = f.read().splitlines()
 			with open(os.path.join('NUS_WID_Tags', 'Test_Tags81.txt')) as f:
 				labels_raw = f.read().splitlines()
@@ -64,10 +60,11 @@ def main():
 		no_unlabeled = 0
 
 		for ind_image_name_raw, image_name_raw in enumerate(image_names_raw):
-			image_name_raw = image_name_raw.split('_')[-1]
-			# some of these images are corrupted or missing
+			image_name_raw = image_name_raw.split('\\')
+			image_name_raw = os.path.join(image_name_raw[0], image_name_raw[1])
+
 			try:
-				image = Image.open(os.path.join('org_images', image_name_raw))
+				image = Image.open(os.path.join('Flickr', image_name_raw))
 			except:
 				no_missing += 1
 				continue
@@ -93,12 +90,11 @@ def main():
 		label_h = f_out.create_dataset(data_type + '_labels', (len(image_names), len(cats)), dtype=np.int)
 
 		for ind, image_name in enumerate(image_names):
-			image = Image.open(os.path.join('org_images', image_name))
+			image = Image.open(os.path.join('Flickr', image_name))
 			np_image = np.array(image)
 
 			# if the image is grayscale, repeat its channels to make it RGB
 			if len(np_image.shape) == 2:
-				import pdb; pdb.set_trace()
 				np_image = np.repeat(np_image[:, :, np.newaxis], 3, axis=2)
 
 			image_h[ind] = np_image.flatten()
